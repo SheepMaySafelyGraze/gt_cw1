@@ -26,4 +26,27 @@ def payoff_finder_one_dim(num_positions, num_players):
             outcome[closest_players] += 1/(len(closest_players) * num_players)
         for j in range(num_players):
             outcome_list[j][tuple(player_positions)] += outcome[j]
-payoff_finder_one_dim(3, 3)
+    return outcome_list
+
+print(payoff_finder_one_dim(3, 3)[0]) 
+def get_best_response_for_players(num_positions, num_players):
+    outcome_list = payoff_finder_one_dim(num_positions, num_players)
+    response_list = [[] for i in range(num_players)]
+    position_list = [i for i in range(num_positions)]
+    # get all the permutations of other players
+    position_permutations = np.array([list(product) for product in itertools.product(position_list, repeat=num_players-1)])
+    for player in range(num_players):
+    # this is ok for player a but for later players this is confusing -> put slice(None) where they have to be
+        for position in position_permutations:
+            new_list = list(position)[0:player] + [slice(None)] + list(position)[player:]
+            possible_outcomes = outcome_list[player][tuple(new_list)]
+            best_response = np.argmax(possible_outcomes) # TODO: this only gets one best response, of course there can be multiple
+            new_list[player] = best_response
+            response_list[player].append(new_list)
+    return response_list
+
+print(get_best_response_for_players(3, 3)[0])
+
+def get_equilibrium_for_players(num_positions, num_players):
+    # basically checks if the best responses intersect (if we have say [0, 1, 2] in all 3 players' best responses lists)
+    pass
