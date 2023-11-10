@@ -45,8 +45,20 @@ def get_best_response_for_players(num_positions, num_players):
             response_list[player].append(new_list)
     return response_list
 
-print(get_best_response_for_players(3, 3)[0])
+print(get_best_response_for_players(10, 2))
 
-def get_equilibrium_for_players(num_positions, num_players):
+def get_equilibria_for_players(num_positions, num_players):
     # basically checks if the best responses intersect (if we have say [0, 1, 2] in all 3 players' best responses lists)
-    pass
+    response_list = get_best_response_for_players(num_positions, num_players)
+    equilibrium_list = []
+    for response in response_list[0]:
+        add_to_list = True
+        for i in range(1, len(response_list)):
+            if response not in response_list[i]:
+                add_to_list = False
+                break
+        if add_to_list:
+            equilibrium_list.append(response)
+    return equilibrium_list
+
+print(get_equilibria_for_players(10, 2))
