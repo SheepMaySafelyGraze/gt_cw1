@@ -40,12 +40,16 @@ def get_best_response_for_players(num_positions, num_players):
         for position in position_permutations:
             new_list = list(position)[0:player] + [slice(None)] + list(position)[player:]
             possible_outcomes = outcome_list[player][tuple(new_list)]
-            best_response = np.argmax(possible_outcomes) # TODO: this only gets one best response, of course there can be multiple
-            new_list[player] = best_response
-            response_list[player].append(new_list)
+            # print(possible_outcomes)
+            # print(np.argwhere(possible_outcomes == np.max(possible_outcomes)))
+            best_response = np.argwhere(possible_outcomes == np.max(possible_outcomes)) # TODO: this only gets one best response, of course there can be multiple
+            for val in best_response:
+                new_list[player] = val[0]
+                response_list[player].append(new_list)
+
     return response_list
 
-print(get_best_response_for_players(10, 2))
+print(get_best_response_for_players(11, 2))
 
 def get_equilibria_for_players(num_positions, num_players):
     # basically checks if the best responses intersect (if we have say [0, 1, 2] in all 3 players' best responses lists)
@@ -61,4 +65,4 @@ def get_equilibria_for_players(num_positions, num_players):
             equilibrium_list.append(response)
     return equilibrium_list
 
-print(get_equilibria_for_players(10, 2))
+print(get_equilibria_for_players(11, 2))
