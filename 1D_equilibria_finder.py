@@ -23,12 +23,12 @@ def payoff_finder_one_dim(num_positions, num_players):
                     closest_distance = distance_dict[spot][player_positions[i]]
                 elif distance_dict[spot][player_positions[i]] == closest_distance:
                     closest_players.append(i)
-            outcome[closest_players] += 1/(len(closest_players) * num_players)
+            outcome[closest_players] += 1/(len(closest_players) * num_positions)
         for j in range(num_players):
             outcome_list[j][tuple(player_positions)] += outcome[j]
     return outcome_list
 
-print(payoff_finder_one_dim(3, 3)[0]) 
+print(payoff_finder_one_dim(10, 2)[0]) 
 def get_best_response_for_players(num_positions, num_players):
     outcome_list = payoff_finder_one_dim(num_positions, num_players)
     response_list = [[] for i in range(num_players)]
@@ -48,7 +48,7 @@ def get_best_response_for_players(num_positions, num_players):
                 response_list[player].append(new_list)
     return response_list
 
-print(get_best_response_for_players(10, 2))
+ # print(get_best_response_for_players(10, 2))
 
 def get_equilibria_for_players(num_positions, num_players):
     # basically checks if the best responses intersect (if we have say [0, 1, 2] in all 3 players' best responses lists)
@@ -64,4 +64,4 @@ def get_equilibria_for_players(num_positions, num_players):
             equilibrium_list.append(response)
     return equilibrium_list
 
-print(get_equilibria_for_players(10, 4))
+print(get_equilibria_for_players(10, 2))
