@@ -15,20 +15,25 @@ def payoff_finder_one_dim(num_positions, num_players):
     for player_positions in position_permutations:
         outcome = np.array([0 for i in range(num_players)], dtype="float")
         for spot in position_list:
-            closest_players = []
+            closest_players = {}
             closest_distance = num_positions + 1
             for i in range(num_players):
                 if distance_dict[spot][player_positions[i]] < closest_distance:
-                    closest_players = [i]
+                    closest_players = {}
+                    closest_players[player_positions[i]] = [i]
                     closest_distance = distance_dict[spot][player_positions[i]]
                 elif distance_dict[spot][player_positions[i]] == closest_distance:
-                    closest_players.append(i)
-            outcome[closest_players] += 1/(len(closest_players) * num_positions)
+                    if player_positions[i] in closest_players.keys():
+                        closest_players[player_positions[i]].append(i)
+                    else:
+                        closest_players[player_positions[i]] = [i]
+            for key in closest_players.keys():
+                outcome[closest_players[key]] += 1/(len(closest_players.keys()) * len(closest_players[key]) * num_positions)
         for j in range(num_players):
             outcome_list[j][tuple(player_positions)] += outcome[j]
     return outcome_list
 
-print(payoff_finder_one_dim(10, 2)[0]) 
+print(payoff_finder_one_dim(10, 3)[0]) 
 def get_best_response_for_players(num_positions, num_players):
     outcome_list = payoff_finder_one_dim(num_positions, num_players)
     response_list = [[] for i in range(num_players)]
@@ -64,4 +69,4 @@ def get_equilibria_for_players(num_positions, num_players):
             equilibrium_list.append(response)
     return equilibrium_list
 
-print(get_equilibria_for_players(10, 2))
+print(get_equilibria_for_players(10, 3))
