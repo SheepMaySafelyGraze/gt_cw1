@@ -67,6 +67,15 @@ def get_equilibria_for_players(num_positions, num_players):
                 break
         if add_to_list:
             equilibrium_list.append(response)
-    return equilibrium_list
+    equilibrium_count = len(equilibrium_list)
+    return np.unique([set(equilibrium) for equilibrium in equilibrium_list]), equilibrium_count
 
-print(get_equilibria_for_players(10, 3))
+print(get_equilibria_for_players(10, 4))
+player_list = [2, 3, 4, 5, 6, 7]
+num_spaces = [10, 11]
+for player in player_list:
+    for spaces in num_spaces:
+        print(f"Equilibria for {player} players and {spaces} spaces")
+        eq, eq_count = get_equilibria_for_players(spaces, player)
+        print(eq)
+        print(eq_count)
