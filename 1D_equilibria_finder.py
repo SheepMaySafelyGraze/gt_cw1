@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 
+
 def payoff_finder_one_dim(num_positions, num_players):
     G = nx.grid_graph([num_positions])
     distance_dict = dict(nx.all_pairs_shortest_path_length(G))
@@ -33,7 +34,7 @@ def payoff_finder_one_dim(num_positions, num_players):
             outcome_list[j][tuple(player_positions)] += outcome[j]
     return outcome_list
 
-print(payoff_finder_one_dim(10, 3)[0]) 
+print(payoff_finder_one_dim(10, 3)[0])
 def get_best_response_for_players(num_positions, num_players):
     outcome_list = payoff_finder_one_dim(num_positions, num_players)
     response_list = [[] for i in range(num_players)]
@@ -68,7 +69,7 @@ def get_equilibria_for_players(num_positions, num_players):
         if add_to_list:
             equilibrium_list.append(response)
     equilibrium_count = len(equilibrium_list)
-    return np.unique([set(equilibrium) for equilibrium in equilibrium_list]), equilibrium_count
+    return ([equilibrium for equilibrium in equilibrium_list]), equilibrium_count
 
 print(get_equilibria_for_players(10, 4))
 player_list = [2, 3, 4, 5, 6, 7]

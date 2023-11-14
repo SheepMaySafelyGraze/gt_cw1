@@ -170,9 +170,9 @@ c = 3
 
 payoffs = [((v-c)/2, -(v-c)/2), (v, 0), (0, 0), (v + 5, v/2)]
 sampler = PayoffSampler(payoffs, n_A=2, seed=1)
-sample_payoffs = sampler.sample_rejection(100000)
-convex_hull = sampler.sample_naive(100000)
-plt.scatter([t[0] for t in sample_payoffs], [t[1] for t in sample_payoffs], s=0.5)
+#sample_payoffs = sampler.sample_rejection(1000)
+convex_hull = sampler.sample_naive(1000)
+#plt.scatter([t[0] for t in sample_payoffs], [t[1] for t in sample_payoffs], s=0.5)
 plt.scatter([t[0] for t in convex_hull], [t[1] for t in convex_hull], s=0.5, color="red")
 plt.show()
 
