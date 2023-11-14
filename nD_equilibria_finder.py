@@ -2,16 +2,8 @@
 
 import networkx as nx
 import numpy as np
-import scipy as sp
-import matplotlib.pyplot as plt
 import itertools
 import copy
-
-
-# TODO:
-#   - functions to compute payoffs and equilibria in multiplayer case
-#   - functions to compute payoffs and equilibria in 2d political compass case
-#
 
 
 def payoff_finder(num_positions, dimensions=1, num_players=2):
@@ -34,8 +26,7 @@ def payoff_finder(num_positions, dimensions=1, num_players=2):
     # loop over positions of n-1 players, computing payoff for final player
     # this gives entire list as game is symmetric
     for play in itertools.product(position_list, repeat=num_players-1):
-        print(play)
-        i, j = [position_dict[x] for x in play]
+        indices = [position_dict[x] for x in play]
         for player_spot in position_list:  # for each playable position by nth player
             pos = copy.deepcopy(list(play))  # list of all positions
             pos.append(player_spot)
@@ -51,7 +42,9 @@ def payoff_finder(num_positions, dimensions=1, num_players=2):
                     # finding number of occupied positions which are equidistant
                     pos_closest = [b for b in pos if distances[b] == minimum]
                     closest_unique = len(list(set(pos_closest)))
-                    payoff_tensor[i, j, position_dict[player_spot]] += square_weight/(max(1, closest_unique) * max(1, player_overlap))
+                    indices_set = [[k] for k in indices]
+                    indices_set.append([position_dict[player_spot]])
+                    payoff_tensor[tuple(indices_set)] += square_weight/(max(1, closest_unique) * max(1, player_overlap))
     return payoff_tensor
 
 
@@ -119,12 +112,3 @@ def find_equilibria(num_positions, dimensions, num_players, payoff_tensor=None, 
             equilibria.append(pos)
 
     return equilibria
-
-
-
-
-
-
-
-
-
