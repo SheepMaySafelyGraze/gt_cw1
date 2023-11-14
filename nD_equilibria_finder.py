@@ -112,11 +112,3 @@ def find_equilibria(num_positions, dimensions, num_players, payoff_tensor=None, 
             equilibria.append(pos)
 
     return equilibria
-
-m, n, l = 3, 2, 2
-print((m**n)**l)
-equilibria = find_equilibria(num_positions=m, dimensions=n, num_players=l)
-print(len(equilibria))
-print(equilibria)
-# optional save of equilibria found in list
-# np.save(f"equilibria_{m}_{n}_{l}", equilibria)
