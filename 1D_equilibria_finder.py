@@ -80,3 +80,4 @@ for player in player_list:
         eq, eq_count = get_equilibria_for_players(spaces, player)
         print(eq)
         print(eq_count)
+        np.save(f"{player}-{spaces}", eq)
