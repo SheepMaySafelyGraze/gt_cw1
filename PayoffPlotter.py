@@ -4,13 +4,6 @@ import scipy as sp
 
 # code for plotting payoff space of a 2-player game via monte carlo methods
 
-# NAIVE APPROACH: Generate random strategies and plot payoff points
-
-# TODO:
-#   - implement non-naive strategy: rejection sampling on convex payoff region
-#       > need to work out how to define the rejection rule!
-
-
 def orientation(p, q, r):
     val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
     if val == 0:
@@ -112,7 +105,6 @@ class PayoffSampler:
 
         return samples
 
-
     def sample_rejection(self, N):
         """
         uses rejection sampling to sample uniformly from convex hull
@@ -149,7 +141,7 @@ def get_election_payoffs(n):
             aPay = 0
             bPay = 0
             # for each point on the political spectrum
-            for k in range(n):  # TODO: this is a really(!) inefficient implementation and there's a lot of ez fixes
+            for k in range(n):
                 aDist = abs(aStrat-k)
                 bDist = abs(bStrat-k)
                 if aDist < bDist:
@@ -170,9 +162,7 @@ c = 3
 
 payoffs = [((v-c)/2, -(v-c)/2), (v, 0), (0, 0), (v + 5, v/2)]
 sampler = PayoffSampler(payoffs, n_A=2, seed=1)
-#sample_payoffs = sampler.sample_rejection(1000)
 convex_hull = sampler.sample_naive(1000)
-#plt.scatter([t[0] for t in sample_payoffs], [t[1] for t in sample_payoffs], s=0.5)
 plt.scatter([t[0] for t in convex_hull], [t[1] for t in convex_hull], s=0.5, color="red")
 plt.show()
 
