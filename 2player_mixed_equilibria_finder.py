@@ -1,4 +1,5 @@
 import numpy as np
+#attempt at a mixed equilibrium finder
 class MixedEquilibriumFinder:
     """
     Finds mixed equilibrium for a two player finite dimensional game.
